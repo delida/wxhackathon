@@ -36,15 +36,25 @@ contract SmartContract {
     uint otime;
   }
     
+	
+  address public owner;
+  address public ercAddr;
 
   mapping (uint => ProductInfo) internal products;
 
-
+  
+  
     
   function SmartContract() public {
     owner = msg.sender;
+	ercAddr = address(0);
   }
   
+  function setErcAddr(address _ercAddr) public {
+    require(owner == msg.sender);
+    
+    ercAddr = _ercAddr;
+  }
 
 
   
