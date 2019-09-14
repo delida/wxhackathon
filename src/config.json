@@ -1,0 +1,16 @@
+{
+	"vnodeAddress": "http://120.79.142.171:8989",
+	"via": "0xd868337c1a4167b5c6d1e273a0044016ea044d82",
+	
+	"monitorAddress":"http://120.79.30.143:8546",
+	"microChainAddress": "0xd196e7e1344831edc50c7eb5786b202f58a88e94",
+	
+	"localIpfsIp": "localhost",
+    "localIpfsPort": 5001,
+	
+	"paltformAddr" : "0x87e369172af1e817ebd8d63bcd9f685a513a6736",
+	"privateKey" : "0x94645c7a048771045f90e0b88adf3ddf5afbb5029c2b1b5586d5afa9ba87c8f5"
+	
+	
+	
+}
