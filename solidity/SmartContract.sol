@@ -49,6 +49,7 @@ contract SmartContract {
   mapping (address => uint[]) internal ownedBuyOids;
   mapping (address => uint[]) internal ownedSellOids;
   
+  
      
   function SmartContract() public {
     owner = msg.sender;
@@ -212,8 +213,16 @@ contract SmartContract {
     return (newOid, tid);
   }
   
+  function getOrderByTokenid(uint _tokenid) public view returns (OrderInfo) {
+    uint i;
+    for (i = 0; i < allOids.length; i++) {
+        if (orders[allOids[i]].tokenid == _tokenid) {
+          return orders[allOids[i]];
+        }
+      
+    }
+  }
   
-
   
   function getOrders(address _addr, uint _type) public view returns (OrderInfo[]) {
     uint i;
