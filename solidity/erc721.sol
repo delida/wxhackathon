@@ -240,9 +240,16 @@ contract TestCoin is ERC721BasicToken {
 	owner = msg.sender;
   }
   
+  function setSmartAddr(address _smartAddr) public {
+    require(owner == msg.sender);
+    
+    smartaddr = _smartAddr;
+  }
+  
   function createToken(address _seller, string _name, uint _price, string _hash, string _file, uint _ctype, address _buyer, uint _otime) public returns (uint) {    //change
     
-    
+    require(msg.sender == smartaddr);
+	
 	// ctype 1: public  2: approve  3: buy
 	
 	metadata memory mt = metadata({
