@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js" data-ng-app="MetronicApp"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js" data-ng-app="MetronicApp"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" data-ng-app="BlocksApp">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+    <title data-ng-bind="'MOAC | ' + $state.current.data.tabName"></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Moac BlockChain Explorer" name="description" />
+    <meta content="Elaine" name="author" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon1.ico" />
+
+    <base href="/">
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+        type="text/css" />
+    <link href="/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN DYNAMICALLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
+    <link id="ng_load_plugins_before" />
+    <!-- END DYNAMICALLY LOADED CSS FILES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="/css/components.min.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="/css/green-haze.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="semantic/dist/semantic.css" type="text/css" />
+    
+    <style>
+        body {
+            font-family: Microsoft Yahei, -apple-system, sans-serif !important;
+        }
+
+        #mainMenu {
+            transition: all linear 0.5s
+        }
+
+        #mainMenu>.lang {
+            color: black;
+            border-radius: 5px !important;
+            width: 100%;
+        }
+
+        #mainMenu>.lang:hover {
+            background: #2185D0;
+            color: white !important;
+        }
+
+        #mainMenu>.item {
+        	width: 120px;
+            color: black;
+            border-radius: 5px !important;
+        }
+
+        #mainMenu>.item:hover {
+            background: #2185D0;
+            color: white !important;
+        }
+
+        #mainMenu>.item:active {
+            background: rgb(2, 70, 122);
+            color: white !important;
+        }
+
+        .navhead {
+            border-radius: 5px !important;
+            background: #8b4d9f;
+            color: white;
+            padding: 10px 5px 10px 5px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .activeNav {
+            background: #2185D0;
+            color: white !important;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        .logs {
+            opacity: 0;
+            transition: all 0.5s;
+        }
+
+        .toggleLog {
+            opacity: 1;
+        }
+
+        .homeFormat {
+            pointer-events: none;
+        }
+    </style>
+  
+    <script src="/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE JQUERY PLUGINS -->
+    <!-- BEGIN CORE ANGULARJS PLUGINS -->
+    <script src="/plugins/angularjs/angular.min.js" type="text/javascript"></script>
+    <script src="/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
+    <script src="/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
+    <script src="/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
+    <script src="/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
+    <script src="/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+    <!-- END CORE ANGULARJS PLUGINS -->
+    <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
+    <script src="/js/app.min.js" type="text/javascript"></script>
+    <script src="/js/web3utils.js" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+    <script src="/js/filters.js" type="text/javascript"></script>
+
+    <script src="/js/directives.js" type="text/javascript"></script>
+    <!-- END APP LEVEL ANGULARJS SCRIPTS -->
+    <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
+    <script src="/js/layout.min.js" type="text/javascript"></script>
+    <script src="/plugins/d3.v3.min.js" type="text/javascript"></script>
+    <script src="semantic/dist/semantic.min.js" type="text/javascript"></script>
+    <script>
+
+        var toggleLog = function () {
+            $(".logs").toggleClass('toggleLog');
+        };
+
+        $("#mainMenu>.item").click(function (e) {
+            $("#mainMenu>.item").removeClass("activeNav");
+            $(e.target).addClass("activeNav");
+        });
+
+        var toggleNav = function () {
+            console.log("click toggle");
+            $('.dropdownContent')
+                .transition({ animation: 'drop' });
+        }
+
+        loggedIn = false;
+        console.log('loggedIn', loggedIn);
+
+    </script>
+    <!-- <link rel="stylesheet" href="../semantic/dist/semantic.min.css" type="text/css"/> -->
+    <!-- END THEME STYLES -->
+    <!-- END HEAD -->
+    <!-- BEGIN BODY -->
+</head>
+
+<body ng-controller="MainController" class="page-header-fixed page-on-load"
+    style=" background-color: rgb(230, 230, 230) !important;"
+    ng-class="{'page-content-white': settings.layout.pageContentWhite,'page-container-bg-solid': settings.layout.pageBodySolid}">
+    
+    <div class="ui active dimmer" id="createOrder" style="display: none;position: fixed;top:0;z-index: 9000;">
+        <div class="ui medium text loader">{{'placing_order' |i18n}}</div>
+    </div>
+    <div class="ui active dimmer" id="uploadFile" style="display: none;position: fixed;top:0;z-index: 9000;">
+        <div class="ui medium text loader">{{'placing_file' |i18n}}</div>
+    </div>
+    <div class="ui active dimmer" id="publishProduct" style="display: none;position: fixed;top:0;z-index: 9000;">
+        <div class="ui medium text loader">{{'publish_product' |i18n}}</div>
+    </div>
+    <div class="ui active dimmer" id="retriveData" style="display: none;position: fixed;top:0">
+            <div class="ui medium text loader">{{'retriving_resource' |i18n}}</div>
+        </div>
+    <!-- BEGIN PAGE SPINNER -->
+    <input id="clipboard" style="opacity:0;position: fixed;">
+    <div ng-spinner-bar class="page-spinner-bar">
+        <img src="/img/loading.gif">
+    </div>
+    <!-- END PAGE SPINNER -->
+    <!-- BEGIN HEADER -->
+    <div class="page-wrapper">
+        <div class="page-wrapper-row">
+            <div class="page-wrapper-top">
+                <!-- BEGIN HEADER -->
+                <!-- <div ng-include="'tpl/header.html'" ng-controller="HeaderController" class="page-header"> </div> -->
+                <!-- END HEADER -->
+            </div>
+        </div>
+        <div class="page-wrapper-row full-height">
+                
+            <div class="page-wrapper-middle">
+                  
+                <!-- BEGIN CONTAINER -->
+                <div class="page-container">
+                    <!-- BEGIN PAGE HEAD -->
+                    <div ng-include="'tpl/page-head.html'" ng-controller="PageHeadController" class="page-head"> </div>
+                    <!-- END PAGE HEAD -->
+                    <!-- BEGIN PAGE CONTENT -->
+                    <div>
+                            
+                        <div class="ui grid centered stackable " style="transition:all linear 0.5s; ">
+                                
+                            <!-- BEGIN ACTUAL CONTENT -->
+                            <div class="row">
+                                <div class="two wide column" style="padding:50px 20px;">
+                                    <div class="ui list" id="mainMenu"
+                                        style="width:70%;text-align: left;margin-left:auto;position: sticky;top:25px;">
+                                        <div class="navhead"><i class="browser icon"></i>{{'navbar' |i18n}}</div>
+                                      
+                                        <a id="nav_index" href="/index" onclick='$("#nav_index").addClass("activeNav");$("#nav_product").removeClass("activeNav");' class="activeNav item" data-toggle="tab" aria-expanded="false"
+                                            style="padding:10px;margin-bottom: 10px">
+                                            <span class="homeFormat"><i class="home icon"></i>{{'home' |i18n}}</span>
+                                        </a>
+                                    
+                                        <a id="nav_product" onclick='$("#nav_index").removeClass("activeNav");$("#nav_product").addClass("activeNav");' href="/mainBoard#buy"data-toggle="tab" aria-expanded="false"
+                                            class="item" style="padding:10px;margin-bottom: 10px">
+                                            <span class="homeFormat"><i class="user friends icon"></i>
+                                                {{'porduct' |i18n}}</span>
+                                        </a>
+                                        
+
+                                        <a data-toggle="tab" aria-expanded="false" class="item subchainBroswer"
+                                            style="padding:10px;margin-bottom: 10px" onclick=toggleLog()>
+                                            <span class="homeFormat"><i class="cogs icon"></i>
+                                                {{'logs' |i18n}}</span>
+                                        </a>
+
+                                        <a href="http://testnet.moac.io/subchain/%257Eke_afdfqg%2560dX%255Emij%255CV%25A8%25DC%2595jo%259B%259C%259C%2596dghlkd%2596%25C9%25C7%2598e%2593%259A%259C%25C7%2597lon%2598%2594bb%2598%259Bm%2599%2599p%259D%259EmZ%2598%25E2%25D3%2583%2584%25C9%25C7%25D7%25DC%258DWWW"
+                                            target="_blank" class="item subchainBroswer"
+                                            style="padding:10px;margin-bottom: 10px">
+                                            <span class="homeFormat"><i class="browser icon"></i>
+                                                {{'subchain_explorer' |i18n}}</span>
+                                        </a>
+
+                                        <a  class="item"
+                                            style="padding:10px;margin-bottom: 5px" ng-click="changeLang()">
+                                            <span class="homeFormat"><i class="exchange icon"></i>
+                                                {{'switch_language' |i18n}}</span>
+                                        </a>                                        
+                                    </div>
+                                </div>
+
+                                <div ui-view class="fade-in-up eleven wide stretched column tableContent"
+                                    style="min-height: 650px;background:white" >
+
+                                </div>
+                                <!-- END ACTUAL CONTENT -->
+                                
+                                <div class="fade-in-up three wide stretched column tableContent"
+                                    style="background:white;">
+                                    
+                                    <!-- <iframe frameborder="0" height="200px" src="http://testnet.moac.io/subchain/%257Eke_afdfqg%2560dX%255Emij%255CV%25A8%25DC%2595jo%259B%259C%259C%2596dghlkd%2596%25C9%25C7%2598e%2593%259A%259C%25C7%2597lon%2598%2594bb%2598%259Bm%2599%2599p%259D%259EmZ%2598%25E2%25D3%2583%2584%25C9%25C7%25D7%25DC%258DWWV?tdsourcetag=s_pcqq_aiomsg"></iframe></iframe> -->
+                                    <div class="logs" style="padding:30px 30px 30px 10px;overflow-y: auto;position:sticky;top:0;max-height: 750px">
+                                        <div class="ui message "
+                                            style="text-align:center;height: 100%;word-break: break-all;overflow:scroll; overflow-x:hidden">
+                                            <div class="header">
+                                                {{'logs' |i18n}}
+                                            </div>                                           
+                                        </div>
+                                    </div>
+                                    <!-- <hr> -->
+
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- END PAGE CONTENT -->
+                </div>
+                <!-- END CONTAINER -->
+            </div>
+        </div>
+        <div class="page-wrapper-row">
+            <div class="page-wrapper-bottom">
+                <!-- BEGIN FOOTER -->
+                <div data-ng-include="'tpl/footer.html'" data-ng-controller="FooterController"> </div>
+                <!-- END FOOTER -->
+            </div>
+        </div>
+    </div>
+
+   
+    <!-- END FOOTER -->
+    <!-- BEGIN CORE JQUERY PLUGINS -->
+  
+   
+    <!-- END APP LEVEL JQUERY SCRIPTS -->
+    <script type="text/javascript">
+       
+        
+        // $(document).ready(function(){
+        // $('.ui.sticky')
+        //     .sticky({
+        //         context: '#mainArea'
+        //     });
+        // })
+
+    </script>
+    <link id="ng_load_plugins_after" />
+    <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+
+</html>
