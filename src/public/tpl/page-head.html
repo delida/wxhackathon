@@ -1,0 +1,92 @@
+<!-- <div
+    style="height:80px;margin-bottom:40px;display:flex;box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);padding:0 60px 0 20px">
+
+    <div style="padding-top:30px;z-index: 999;margin-left:auto;text-align: right" onclick=toggleNav()>
+        <div ><a class="ui secoundary basic tag label"
+                style="padding:10px 20px 10px 20px;margin-bottom: 10px"><i class="user icon"></i>地址 : {{currentUser}}</a></div>
+        <div class="dropdownContent">
+            <div><a class="ui orange basic tag label useraddress"
+                    style="padding:10px 30px 10px 30px;margin-bottom: 10px"
+                    ng-click="getKey(currentUser)">备份账户Keystore </a></div>
+            <div><a class="ui yellow basic tag label useraddress"
+                    style="padding:10px 30px 10px 30px;margin-bottom: 10px" href="/home">登出 </a></div>
+        </div>
+    </div>
+
+</div> -->
+
+<script>
+    var toggleNav = function () {
+        console.log("click toggle");
+        $('.dropdownContent').transition({ animation: 'drop' });
+    }
+
+</script>
+<style>
+    .default_avatar {
+        background: url(img/default_avatar.png)!important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+    }
+    
+    .dropdownContent {
+            display: none
+        }
+</style>
+<div
+    style="height:80px;display:flex;box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);padding:0 100px 0 70px;background:#192e39; ">
+
+    <div style="color:white;padding-top:20px;">
+        <h1 style="font-family: Microsoft Yahei, -apple-system, sans-serif!important;">{{'main_title'|i18n}}</h1>
+    </div>
+
+
+    <div style="padding-top:30px;z-index: 999;margin-left:auto;" 
+        onmouseover="javascript:this.style.cursor = 'pointer'">
+
+        <div style="text-align: right;vertical-align: middle" onclick=toggleNav()>
+            <a class="ui grey empty circular label default_avatar" style="min-width: 30px;min-height: 30px;"></a>
+            <i class="angle down icon " style="color:white;"></i>
+        </div>
+        <div class="dropdownContent">
+            <div class="ui vertical menu ">
+                <a class="item" title={{currentUser}}
+                    style="overflow:hidden; text-overflow:ellipsis;font-family: Microsoft Yahei, -apple-system, sans-serif!important;">
+                    {{currentUser}}</a>
+                <a class="item" ng-click="getTokenBalance(currentUser)" 
+                    style="overflow:hidden; text-overflow:ellipsis;font-family: Microsoft Yahei, -apple-system, sans-serif!important;">
+                    {{'balance' |i18n}}：<span id="moacblance"></span> 
+                    <span style="padding: 2px 5px;border-radius: 5px;" class="activeNav" >刷新</span></a>
+                <a class="item" ng-click="getKey(currentUser)"
+                    style="font-family: Microsoft Yahei, -apple-system, sans-serif!important;">{{'backup_keystore' |i18n}}  </a>
+                <a onclick="logout()" class="item" href="/home"
+                    style="font-family: Microsoft Yahei, -apple-system, sans-serif!important;">{{'logout' |i18n}}  </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="ui basic modal">
+    <div class="ui icon header">
+        <i class="key icon"></i>
+        {{'modal_title' |i18n}}
+    </div>
+    <div class="content" style="word-wrap:break-word;">
+        <p>{{'private_key' |i18n}}：{{privateKey}}</p>
+        <p id="keystore">Keystore：{{keyStore}}</p>
+    </div>
+    <div class="actions">
+        <div class="ui red basic cancel inverted button">
+            <i class="remove icon"></i>
+            {{'close' |i18n}}
+        </div>
+        <div class="ui green ok inverted button" ng-click=copyToClipboard()>
+            <i class="checkmark icon"></i>
+            {{'copy_keystore' |i18n}}
+        </div>
+    </div>
+</div>
