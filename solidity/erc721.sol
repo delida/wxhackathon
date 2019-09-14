@@ -234,12 +234,7 @@ contract TestCoin is ERC721BasicToken {
   address public smartaddr;
 
   metadata[] mts;
-  
-  /*
-  function TestCoin(address smartaddr) public {
-	owner = smartaddr;
-  }
-  */
+ 
   
   function TestCoin() public {
 	owner = msg.sender;

@@ -42,8 +42,6 @@ contract SmartContract {
 
   mapping (uint => ProductInfo) internal products;
 
-  
-  
     
   function SmartContract() public {
     owner = msg.sender;
