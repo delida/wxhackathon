@@ -245,5 +245,24 @@ contract TestCoin is ERC721BasicToken {
 	owner = msg.sender;
   }
   
-  
+  function createToken(address _seller, string _name, uint _price, string _hash, string _file, uint _ctype, address _buyer, uint _otime) public returns (uint) {    //change
+    
+    
+	// ctype 1: public  2: approve  3: buy
+	
+	metadata memory mt = metadata({
+      seller: _seller,
+	  name: _name,
+	  price: _price,
+	  hash: _hash,
+	  file: _file,
+	  ctype: _ctype,
+	  buyer: _buyer,
+	  otime: _otime
+    });
+
+    uint256 newTokenId = mts.push(mt) - 1;
+	_mint(_buyer, newTokenId);
+	return newTokenId;
+  }
 }
