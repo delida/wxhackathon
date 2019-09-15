@@ -85,39 +85,7 @@ contract SmartContract {
     return newPid;
   }
     
-  function updateProduct(uint _pid, string _provide, string _name, uint _price, string _hash, string _file, uint _ctype, string _introduce) public {
-    ProductInfo memory pt = products[_pid];
-    require(pt.seller == msg.sender);
   
-    if (0 != bytes(_provide).length) {
-      pt.provide = _provide;
-    }
-      
-    if (0 != bytes(_name).length) {
-      pt.name = _name;
-    }
-      
-    if (0 != _price) {
-      pt.price = _price;
-    }
-      
-    if (0 != bytes(_hash).length) {
-      pt.hash = _hash;
-    }
-	
-	if (0 != bytes(_file).length) {
-      pt.file = _file;
-    }
-	
-	if (0 != _ctype) {
-      pt.ctype = _ctype;
-    }
-      
-    if (0 != bytes(_introduce).length) {
-      pt.introduce = _introduce;
-    }
-    products[_pid] = pt;
-  }
   
   function downProduct(uint _pid) public {
 	require(msg.sender == owner);
