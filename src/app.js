@@ -77,6 +77,7 @@ app.post('/uploadFile', upload.single('file'), function(req, res, next){
 //ipfs文件下载
 app.post('/downloadFile',function(req,res){
 	var fileIpfsHash = req.body.hash;
+	var type = req.body.type;
 	var filename = req.body.filename;
 	console.log(fileIpfsHash);
 	ipfs.cat("/ipfs/" + fileIpfsHash, function(err, file) {
@@ -87,7 +88,7 @@ app.post('/downloadFile',function(req,res){
 		   console.log(file);
           res.writeHead(200,{  
               'Content-Type': 'application/octet-stream', // 告诉浏览器这是一个二进制文件
-              'Content-Disposition': 'attachment; filename=' + filename, // 告诉浏览器这是一个需要下载的文件
+              'Content-Disposition': 'attachment; filename=' + type+'-'+filename, // 告诉浏览器这是一个需要下载的文件
           });  
           res.write(file)
           res.end(JSON.stringify({code: 200, success: true, data: file, message: ""})); 

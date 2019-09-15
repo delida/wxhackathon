@@ -144,7 +144,7 @@ angular.module('localization', [])
 angular.module('localization')
     .value('localizedTexts', {
         'zh_CN': {
-            'main_title':"Master Of Data",
+            'main_title':"Master of Data",
             'switch_language':"切换语言",
             'placing_order':"订单创建中...",
             'placing_file':"文件上传Ipfs节点中...",
@@ -198,6 +198,8 @@ angular.module('localization')
             'operation': "操作",
             'buy': "购买",
             'buy_free': "免费购买",
+            'free': "免费",
+            'pay': "付费",
             'release_product': "发布商品",
             'sale_history': "查看卖出的历史订单",
             'purchase_link': "数据文件",
@@ -264,7 +266,7 @@ angular.module('localization')
             "balance":"子链余额"
         },
         'en_US': {
-            'main_title':"Master Of Data",
+            'main_title':"Master of Data",
             'switch_language':"Switch Language",
             'placing_order':"Placing your order...",
             'placing_file':"Upload Ipfs your file...",
@@ -318,6 +320,8 @@ angular.module('localization')
             'operation': "Operation",
             'buy': "Buy",
             'buy_free': "FreeBuy",
+            'pay': "Pay",
+            'free': "Free",
             'release_product': "Publish Product",
             'sale_history': "Check sale history",
             'purchase_link': "Data File",

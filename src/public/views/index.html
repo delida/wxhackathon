@@ -1,0 +1,67 @@
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+<!-- <script src="semantic/dist/semantic.min.js" type="text/javascript"></script> -->
+<link rel="stylesheet" href="../css/form.css" />
+
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script> -->
+
+<style>
+.main_challenge {
+	height: 450px;
+	width: 100%;
+	background-size: contain !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	/* background: url(img/challenge.png); */
+	/* box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); */
+}
+
+.main_advantage {
+	height: 400px;
+	width: 100%;
+	background-size: contain !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	/* background: url(img/blockchain_advan.png); */
+	/* box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); */
+}
+</style>
+
+</head>
+<body>
+	<div>
+		<div class="tab-pane" id="home" ng-class="{active:true}">
+			<div class="portlet light"
+				style="min-height: 960px; padding-top: 40px">
+				<div style="padding: 20px">
+					<h1>
+						<i class="connectdevelop icon"></i>{{'instruction' |i18n}}
+					</h1>
+				</div>
+				<hr>
+
+				<div class="ui large message" style="margin-top: 30px">
+					<p>{{'data_flow_content' |i18n}}</p>
+				</div>
+				
+				<hr style="border-color: rgba(0, 0, 0, 0.336)">
+				
+				<div class="main_challenge">
+					<img style="width: 45%; float: left;" src="img/use.png" />
+					<p class="ui large message" style="width: 50%; float: left;">{{'data_use_content' |i18n}}</p>
+				</div>
+				<hr style="border-color: rgba(0, 0, 0, 0.336)">
+
+				<div class="main_advantage">
+					<img style="width: 45%; float: left;" src="img/framework.png" />
+					<p class="ui large message" style="width: 50%; float: left;">{{'data_framework_content' |i18n}}</p>
+				</div>
+
+
+			</div>
+
+		</div>
+	</div>
+</body>

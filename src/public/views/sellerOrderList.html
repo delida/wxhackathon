@@ -1,0 +1,64 @@
+<head>
+	<meta charset="utf-8">
+	<script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+	
+	<link rel="stylesheet" href="../css/jquery.pagination.css" />
+	<!-- <script src="../js/jquery-1.10.2.js"></script>
+	<script src="../js/jquery.pagination.min.js"></script> -->
+	
+
+	<script type="text/javascript">
+		$("#searchSc").keydown(function () {
+			if (event.keyCode == "13") {   //keyCode=13是回车键
+				$(".btn").click();
+			}
+		});
+		
+	</script>
+
+</head>
+
+<body>
+	<div class="portlet light" style="min-height: 760px;padding-top:40px;">
+
+		<div style="padding:20px">
+			<h2><i class="list layout icon"></i>{{'seller_order_list' |i18n}}</h2>
+		</div>
+		<hr style="width:75%;">
+		<div class="ui buttons" style="margin-left:20px;margin-bottom: 10px;">
+			<a href="javascript:history.go(-1)"><button type="button" class="ui primary button">
+				{{'back' |i18n}}</button></a>
+		</div>
+		<div class="table-scrollable">
+		<table class="ui fixed table tablet-stackable " style="margin-left:20px">
+			<thead>
+				<tr>
+					<th>{{'orderNum' |i18n}} </th>
+					<th>{{'buyer_address' |i18n}}</th>
+					<th>{{'seller_address' |i18n}} </th>
+					<th>{{'product' |i18n}} </th>
+					<th>{{'time_place_order' |i18n}} </th>
+					<th>{{'type' |i18n}}</th>
+				</tr>
+			</thead>
+			<tr ng-repeat="t in orderList track by $index" repeat-finish>
+				<td> {{t.Oid}}</td>
+				<td title="{{t.Buyer}}"> {{t.Buyer}}</td>
+				<td title="{{t.Seller}}"> {{t.Seller}}</td>
+				<td> {{t.Name}}</td>
+				<td title="{{t.Otime * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}"> {{t.Otime * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+				<!-- <td> <a href="/sellerTokenList/{{t.Oid}}">{{'token_detail' |i18n}}</a></td> -->
+				<td ng-if="t.Ctype==1">免费</td>
+                <td ng-if="t.Ctype==2">授权</td>
+                <td ng-if="t.Ctype==3">付费</td>
+			</tr>
+		</table>
+	</div>
+	</div>
+	<div class="box">
+		<div id="pagination2" class="page" style="margin-top: 15px"></div>
+	</div>
+
+
+	</div>
+</body>

@@ -1,0 +1,134 @@
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+<link rel="stylesheet" href="../css/form.css" />
+<style></style>
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="semantic/dist/semantic.min.js" type="text/javascript"></script>
+<script src="../js/mouploader.js"></script>
+
+</head>
+<body>
+
+		<div class="portlet light" style="min-height: 760px;padding-top:40px;">
+				<div style="padding:20px">
+						<h2><i class="add square icon"></i>{{'release_product' |i18n}} </h2>
+					</div>
+					<hr style="width:75%;">
+		<form name = "myForm" method="post" class="basic-grey" novalidate style="text-align:center">
+			<label> 
+				<span>{{'product' |i18n}}  :</span> 
+				<input type = "text"  name = "name" ng-model="name" required>
+				<span style="color:red; float: none" ng-show="myForm.name.$dirty">
+				<span ng-show="myForm.name.$error.required">{{'error_empty' |i18n}} </span>
+				</span>
+			</label>
+			
+			<label> 
+				<span>{{'source' |i18n}}  :</span> 
+				<input type = "text"  name = "provide"  ng-model="provide" required>
+				<span style="color:red; float: none" ng-show="myForm.provide.$dirty">
+				<span ng-show="myForm.provide.$error.required">{{'error_empty' |i18n}} </span>
+				</span>
+			</label> 
+			
+			<label> 
+				<span>{{'type' |i18n}}  :</span> 
+				<select name="type" id="type" onchange="changetype();">
+					<option value="1">免费</option>
+					<option value="2">授权</option>
+					<option value="3">付费</option>
+				</select>
+
+				<span style="color:red; float: none" ng-show="myForm.provide.$dirty">
+				<span ng-show="myForm.provide.$error.required">{{'error_empty' |i18n}} </span>
+				</span>
+			</label> 
+			
+			<label id="price_label" style="display:none;"> 
+				<span>{{'price' |i18n}}  :</span> 
+				<input type = "text"  name = "price" id="price" value="0"   required>
+				<span style="color:red; float: none" ng-show="myForm.price.$dirty">
+				<span ng-show="myForm.price.$error.required">{{'error_empty' |i18n}} </span>
+				</span>
+			</label> 
+			
+			<label> 
+				<span>{{'abstract' |i18n}}  :</span> 
+				<input type = "text" name = "introduce"  ng-model="introduce"  required>
+				<span style="color:red; float: none" ng-show="myForm.introduce.$dirty">
+				<span ng-show="myForm.introduce.$error.required">{{'error_empty' |i18n}} </span>
+				</span>
+			</label> 
+			
+			<label> 
+				<span>{{'purchase_link' |i18n}}  :</span> 
+				<input type = "file" name = "file" id="file"  ng-model="file"   required>
+				<input type = "hidden" name = "hash" id="hash"  ng-model="hash"   required>
+				<input type = "hidden" name = "file_name" id="file_name"  ng-model="file_name"   required>
+				<span style="color:red; float: none" ng-show="myForm.hash.$dirty">
+				<span ng-show="myForm.hash.$error.required">{{'error_empty' |i18n}} </span>
+				</span>
+			</label>
+			
+			<!-- <input type = "submit" ng-click="submitSc(ip, port, subChainAddress)" value = "Submit" > -->
+			 <input type="button"  style = "margin-top: 15px;" 
+				class="ui primary button" value="{{'submit' |i18n}}"  ng-click="publish(name, provide, introduce)" />
+			
+		</form>
+</div>
+<script>
+function changetype(){
+	var value = $('#type option:selected') .val();
+	if(value=="1"||value=="2"){
+		$("#price").val("0");
+		$("#price_label").hide();
+	}else if(value=="3"){
+		$("#price").val("");
+		$("#price_label").show();
+	}
+}
+
+
+document.querySelector("#file").addEventListener("change",function () {
+	$("#uploadFile").show();
+    //获取到选中的文件
+    var file = document.querySelector("#file").files[0];
+    //创建formdata对象
+    var formdata = new FormData();
+    formdata.append("file",file);
+    //创建xhr，使用ajax进行文件上传
+    var xhr = new XMLHttpRequest();
+    xhr.open("post","/uploadFile");
+    //回调
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState==4 && xhr.status==200){
+        	$("#uploadFile").hide();
+        	var result = JSON.parse(xhr.response); 
+        	if(result.ret_code=='0'){
+        		$('body').toast({
+        			class: 'success',
+        			message: result.ret_msg
+        		});
+            	$("#hash").val(result.hash);
+            	$("#file_name").val(result.filename);
+        	}else{
+        		$('body').toast({
+					class: 'error',
+					message:result.ret_msg
+				});
+        	}
+        }
+    }
+    //获取上传的进度
+//    xhr.upload.onprogress = function (event) {
+//        if(event.lengthComputable){
+//            var percent = event.loaded/event.total *100;
+//            document.querySelector("#progress .progress-item").style.width = percent+"%";
+//        }
+//    }
+    //将formdata上传
+    xhr.send(formdata);
+});
+</script>
+</body>

@@ -1,0 +1,101 @@
+<head>
+	<meta charset="utf-8">
+	<script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+	<link rel="stylesheet" href="../css/form.css" />
+	<link rel="stylesheet" href="../css/default.css" />
+	<style></style>
+	<script src="../js/jquery-1.10.2.js"></script>
+	<script src="semantic/dist/semantic.min.js" type="text/javascript"></script>
+	<script>
+		var copyToClipboard = function () {
+			var copyText = $("#myAccessToken").text();
+			$("#clipboard").val(copyText);
+			$("#clipboard").select();
+			document.execCommand("copy");
+
+			$('body')
+				.toast({
+					class: 'success',
+					message: `拷贝资源成功，请粘贴到AccessToken输入框内并点击【获取资源】查看！`
+				});
+		}
+	</script>
+</head>
+
+<body>
+
+<div id="scbackground" class="background" style="display: none; "></div> 
+	<!-- <span><a href="javascript:history.go(-1)">返回</a></span> -->
+	<div class="portlet light" style="min-height: 760px;padding-top:40px;">
+		<div style="padding:20px">
+			<h2><i class="download icon"></i>获取资源</h2>
+		</div>
+		<hr style="width:75%;">
+		<div class="ui buttons" style="margin-left:20px;margin-bottom: 10px">
+                <a href="javascript:history.go(-1)"><button type="button" class="ui primary button">
+                        返回</button></a>
+            </div>
+		<div class="ui container">
+			<div class="ui placeholder segment">
+				<div class="ui two column stackable center aligned grid">
+					<div class="ui vertical divider">Or</div>
+					<div class="middle aligned row">
+						<div class="column">
+							<div class="ui icon header">
+								<i class="search icon"></i>
+								资源链接
+							</div>
+							<div class="field">
+								<form name="myForm" method="post" class="ui form" novalidate>
+
+									<div ng-repeat="t in finalParams">
+										<span ng-if="t.paramType == 0">{{t.paramName}}（list类型）:</span>
+										<span ng-if="t.paramType == 2">{{t.paramName}}（枚举类型）:</span>
+										<span ng-if="t.paramType == 1">{{t.paramName}}（普通类型）:</span>
+										<span ng-if="t.isRequire == 1">
+											<input type="text" id={{t.paramName}} placeholder={{t.remark}} required />
+										</span>
+										<span ng-if="t.isRequire == 0"><input type="text" id={{t.paramName}}
+												placeholder={{t.remark}}> </span>
+										<span ng-if="t.paramType == 0">
+											<font color="red">请用英文,隔开;字符串加""</font>
+										</span>
+									</div>
+
+									<!-- <input type = "submit" ng-click="submitSc(ip, port, subChainAddress)" value = "Submit" > -->
+									<button type="button" id = "getResourceUrlBtn" style=" margin-top: 15px;" class="ui primary button"
+										ng-click="getCheckResult()">获取资源链接</button>
+									<br />
+								</form>
+							</div>
+
+							<div class="ui info message" style="word-wrap: break-word" ng-if="result != null">
+								<div class="header">
+									您的accessToken:<i class="copy icon"
+										onmouseover="javascript:this.style.cursor = 'pointer'" title="复制资源地址"
+										onclick=copyToClipboard()></i>
+								</div>
+								<p id="myAccessToken">{{result}}</p>
+							</div>
+						</div>
+						<div class="column">
+							<div class="ui icon header">
+								<i class="world icon"></i>
+								获取资源
+							</div>
+							<div class="field">
+								<div class="ui input">
+									<textarea style = "width:400px; height: 200px" placeholder="AccessToken" name="accessToken"
+										ng-model="accessToken"> </textarea>
+								</div>
+								<button type="button" style="margin-top: 15px;" class="ui red button"
+									ng-click="getResource(accessToken)">获取资源 </button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>

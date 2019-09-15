@@ -1,0 +1,273 @@
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+    <script>
+        //减数量
+        var reductionOf = function (obj) {
+            //减前判断
+            if ($(obj).next().val() == '') {
+                $(obj).next().val(1);
+            }
+            if ($(obj).next().val() > 1) {
+                $(obj).next().val(parseInt($(obj).next().val()) - 1);//数值减
+                $(obj).next().val($(obj).next().val());//赋值给框
+            }
+
+        };
+        //加数量
+        var add = function (obj) {
+            //加前判断
+            if ($(obj).prev().val() == '') {
+                $(obj).prev().val(1);
+            }
+            if ($(obj).prev().val() < 500) {
+                $(obj).prev().val(parseInt($(obj).prev().val()) + 1);//数值加
+                $(obj).prev().val($(obj).prev().val());//赋值给框
+            }
+
+        };
+        //校验数字格式（只能输入正整数）
+        var checkNumber = function (obj) {
+            var reg = /^[1-9]\d*$/;
+            if (!reg.test($(obj).val()) || $(obj).val() == '') {
+                $(obj).val(1);
+            }
+        }
+
+        var showLog = function () {
+            $("#logs").transition("slide left");
+            $("#mainMenu").toggleClass("flipAnimation");
+        }
+
+        var hideLog = function () {
+            $("#logs").slideRight(200);
+            $("#mainMenu").removeClass("flipAnimation");
+        }
+
+        $(".numVal").val(1);
+
+        $("#mainMenu>.item").click(function (e) {
+            $("#mainMenu>.item").removeClass("activeNav");
+            $(e.target).addClass("activeNav");
+        })
+
+    </script>
+    <link rel="stylesheet" href="../css/form.css" />
+
+    <link rel="stylesheet" href="../css/jquery.pagination.css" />
+    <link rel="stylesheet" href="../css/default.css" />
+
+
+    <style>
+        .useraddress:active {
+            color: black !important;
+        }
+
+        .homeFormat {
+            pointer-events: none;
+        }
+
+        #logs {
+            display: none;
+        }
+
+        .flipAnimation {
+            transform: perspective(500px)rotateY(-60deg);
+        }
+
+
+        .main_workflow {
+            height: 400px;
+            width: 100%;
+            background-size: contain !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            background: url(img/work_flow.png);
+        
+        }
+
+        .main_structure {
+            height: 400px;
+            width: 100%;
+            background-size: contain !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            background: url(img/moac_structure.png);
+        }
+       
+    </style>
+</head>
+
+<body>
+    <!-- <div id="scbackground" class="background" style="display: none; "></div>  -->
+    <div id="background" class="background" style="display: none; "></div>
+    <!-- <div style="text-align: right;margin-bottom: 10px"><a class="ui red tag label" id="logTag" onclick=showLog()>查看记录</a></div> -->
+    <div class="portlet-body">
+        <div class="tabbable-line">
+            <div class="tab-content">
+                <div class="tab-pane" id="buy" ng-class="{active:true}" data-ng-init=" getSellingProducts()">
+
+                    <div class="portlet light" style="min-height: 960px;padding-top:40px;">
+                        <div style="padding:20px">
+                            <h2><i class="cubes icon"></i>{{'product_list' |i18n}}</h2>
+                        </div>
+                        <hr style="width:75%;">
+
+                        <div class="ui buttons" style="margin-left:20px;margin-bottom: 10px;">
+                        	<a ng-if="admin" href="/publish"><button type="button" class="ui red button">{{'release_product' |i18n}}</button></a>
+                                <div ng-if="admin" class="or"></div>
+                                <a ng-if="admin" href="/sellerOrderList"><button type="button" class="ui primary button">
+                                    {{'sale_history' |i18n}}</button></a>
+                            <a ng-if="!admin" href="/buyerOrderList"><button type="button" class="ui primary button">
+                                {{'purchase_history' |i18n}}</button></a>
+                        </div>
+
+                        <div class="table-scrollable">
+                            <table class="ui fixed table tablet-stackable" style="margin-left:20px">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%;">{{'product_id' |i18n}}</th>
+                                        <th>{{'seller_address' |i18n}}</th>
+                                        <th>{{'Supplier' |i18n}}</th>
+                                        <th>{{'product' |i18n}}</th>
+                                        <th style="width: 8%;">{{'price' |i18n}}</th>
+                                        <th>{{'abstract' |i18n}}</th>
+                                        <th>{{'type' |i18n}}</th>
+                                        <th>{{'operation' |i18n}}</th>
+
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="t in sellingProducts track by $index" repeat-finish>
+                                    <td>{{t.Pid}}</td>
+                                    <td title={{t.Seller}}>{{t.Seller}}</td>
+                                    <td title={{t.Provide}}>{{t.Provide}}</td>
+                                    <td title={{t.Name}}>{{t.Name}}</td>
+                                    <td>{{t.Price}}</td>
+                                    <td title={{t.Introduce}}>{{t.Introduce}}</td>
+                                    <td ng-if="t.Ctype==1">{{'free' |i18n}}</td>
+                                    <td ng-if="t.Ctype==2">{{'auth' |i18n}}</td>
+                                    <td ng-if="t.Ctype==3">{{'pay' |i18n}}</td>
+                                    <td>
+                                    	<a ng-if="!admin&&t.Ctype==1" ng-click="buyProduct(t.Pid,t.Price, t.Seller)">{{'buy_free' |i18n}}</a>
+                                    	<a ng-if="!admin&&t.Ctype==3" ng-click="buyProduct(t.Pid,t.Price, t.Seller)">{{'buy' |i18n}}</a>
+                                    	<a ng-if="admin&&t.Ctype==2" ng-click="openeAuth(t.Pid)">{{'auth' |i18n}}</a>
+                                    	<a ng-if="!admin&&t.Ctype==2" ng-click="openTips(t.Pid)">{{'auth' |i18n}}</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="box">
+                            <div id="pagination2" class="page" style="margin-top: 15px"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="tab-pane" id="sell" ng-class="{active:false}" data-ng-init=" getAllMyProducts()">
+                    <div class="row ">
+                        <span style="float: right">
+                        </span>
+                        <div class="portlet light" style="min-height: 960px;padding-top:40px">
+                            <div style="padding:20px">
+                                <h2><i class="cubes icon"></i>{{'product_list' |i18n}}</h2>
+                            </div>
+                            <hr style="width:75%;">
+                            <div class="ui buttons" style="margin-left:20px;margin-bottom: 10px">
+                                <a href="/publish"><button type="button" class="ui red button">{{'release_product' |i18n}}</button></a>
+                                <div class="or"></div>
+                                <a href="/sellerOrderList"><button type="button" class="ui primary button">
+                                    {{'sale_history' |i18n}}</button></a>
+                            </div>
+                            <div class="table-scrollable">
+                                <table class="ui fixed table tablet-stackable" style="margin-left:20px">
+                                    <thead>
+                                        <tr>
+                                            <th> {{'product_id' |i18n}} </th>
+                                            <th> {{'product' |i18n}} </th>
+                                            <th> {{'price' |i18n}} </th>
+                                            <th> {{'abstract' |i18n}} </th>
+                                            <th> {{'register_date' |i18n}} </th>
+                                            <th>  {{'purchase_link' |i18n}} </th>
+                                            <th>  {{'product_status' |i18n}} </th>
+                                            <th> {{'operation' |i18n}} </th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="t in allMyProducts track by $index" repeat-finish>
+                                        <td>{{t.Pid}}</td>
+                                        <td>{{t.Name}}</td>
+                                        <td>{{t.Price}}</td>
+                                        <td title={{t.Provide}}>{{t.Introduce}}</td>
+                                        <td>{{t.Shelftime * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                        <td>{{t.Url}}</td>
+
+                                        <td ng-if="t.Shelf==true"> <img src="img/open.png" title="已上架" />
+                                        </td>
+                                        <td ng-if="t.Shelf==false"> <img src="img/stop.png" title="已下架" />
+                                        </td>
+
+                                        <td ng-if="t.Shelf==true"> <a ng-click="updateProductStatus(t.Pid, 0)">下架</a>
+                                        </td>
+                                        <td ng-if="t.Shelf==false"> <a ng-click="updateProductStatus(t.Pid, 1)">上架</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="box">
+                                <div id="pagination2" class="page" style="margin-top: 15px"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> -->
+
+
+            </div><!-- end tab content -->
+        </div>
+    </div><!-- End: portlet -->
+
+
+	<div class="ui active dimmer" id="authAddress" style="display:none;position: fixed; top: 0">
+	
+		<div class="portlet light" style="width: 680px;">
+		<i ng-click="closeAuth();" style="margin-left: 43.5rem;font-size: 2em;cursor: pointer;" class="delete square icon"></i>
+			<div style="padding: 20px">
+				<h2>
+					<i class="add square icon"></i>{{'data_authorize' |i18n}}
+				</h2>
+			</div>
+			<hr style="width: 75%;">
+			<div style="padding-bottom: 20px;font-size: 18px;">{{'product_id' |i18n}}：<span id="pro_id"></span>
+			</div>
+			<form name="myForm" method="post" class="basic-grey" novalidate style="text-align: center">
+				<label> <span>{{'authorize_address' |i18n}} :</span> 
+				<input type="text" id="address" name="address" ng-model="address" required> 
+				<span style="color: red; float: none" ng-show="myForm.address.$dirty">
+						<span ng-show="myForm.address.$error.required">{{'error_empty'|i18n}} </span>
+				</span>
+				</label>
+				<!-- <input type = "submit" ng-click="submitSc(ip, port, subChainAddress)" value = "Submit" > -->
+				<input type="button" style="margin-top: 15px;" class="ui primary button" value="{{'submit' |i18n}}" ng-click="authProduct(address)" />
+
+			</form>
+		</div>
+	</div>
+	
+	<div class="ui active dimmer" id="tipsWindows" style="display:none;position: fixed; top: 0">
+	
+		<div class="portlet light" style="width: 680px;">
+		<i ng-click="closeTips();" style="margin-left: 43.5rem;font-size: 2em;cursor: pointer;" class="delete square icon"></i>
+			<div >
+				<h2>
+					<i class="gittip square icon"></i>{{'tips' |i18n}}
+				</h2>
+			</div>
+			<hr style="width: 75%;">
+			<div style="padding-bottom: 20px;font-size: 18px;"><span id="tips_msg"></span></div>
+			<div class="ui buttons" style="margin-left:20px;margin-bottom: 10px;">
+                <a id="go_history" style="display:none" ng-if="!admin" href="/buyerOrderList">
+                	<button type="button" class="ui primary button">{{'purchase_history' |i18n}}</button>
+                </a>
+            </div>
+		</div>
+	</div>
+</body>

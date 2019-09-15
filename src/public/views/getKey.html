@@ -1,0 +1,21 @@
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+<link rel="stylesheet" href="../css/form.css" />
+<style></style>
+<script src="../js/jquery-1.10.2.js"></script>
+
+</head>
+<body>
+<div>
+<input type = "text"  name = "address" ng-model="address" /> &nbsp;&nbsp;
+<button ng-click="getKey(address)">获取</button><br/>
+<br/><br/>
+<div><font color = "red">私钥：</font>{{privateKey}}</div><br/>
+<div><font color = "red">keyStore：</font>{{keyStore}}</div>
+</div>
+</body>
+
+
+
+

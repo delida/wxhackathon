@@ -1,0 +1,146 @@
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>
+<!-- <script src="semantic/dist/semantic.min.js" type="text/javascript"></script> -->
+<link rel="stylesheet" href="../css/form.css" />
+
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script> -->
+  
+<style></style>
+<!-- <script src="../js/jquery-1.10.2.js"></script> -->
+
+</head>
+<body>
+<div>
+<!-- <button class="ui primary button">Save </button>
+<button class="ui button">Discard </button> -->
+
+<div class="portlet light" style="min-height:0px;padding-top:40px;">
+		<div style="padding:20px">
+				<h2><i class="users icon"></i>{{'login_title' |i18n}}</h2>
+			</div>
+			
+     <div class="portlet-body">
+       
+       <div class="tabbable-line">
+          <ul class="nav nav-tabs ">
+              <li ng-class="{active: true}" >
+                  <a href="#login" data-toggle="tab" aria-expanded="false"> {{'login' |i18n}} </a>
+              </li>
+              <li ng-class="{active: false}">
+                  <a href="#keyStoreLogin" data-toggle="tab" aria-expanded="false"> {{'keystore_login' |i18n}} </a>
+              </li>
+              <li ng-class="{active: false}">
+                  <a href="#register" data-toggle="tab" aria-expanded="false"> {{'register' |i18n}} </a>
+              </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane" id="login" ng-class="{active:true}">
+	            <form name = "loginForm" method="post" class="basic-grey" novalidate style="margin-top:20px;">
+				<h1>
+					{{'login' |i18n}}
+				</h1>
+			
+				<label> 
+					<span>{{'account' |i18n}} :</span> 
+					<input type = "text"  name = "address" ng-model="address"   
+					ng-pattern="/^[0-9a-zA-Z]{42}$/" required>    <!-- /^[0-9a-zA-Z]{8}$/ -->
+					<span style="color:red; float: none" ng-show="loginForm.address.$dirty && loginForm.address.$invalid">
+					<span ng-show="loginForm.address.$error.required">{{'error_empty' |i18n}}</span>
+					<span ng-show="loginForm.address.$error.pattern">{{'error_limit42' |i18n}}</span>
+				</label> 
+				
+				<label> 
+					<span>{{'password' |i18n}} :</span> 
+					<input type = "password"  name = "password" ng-model="password" ng-pattern="/^.{1,20}$/" required>
+					<span style="color:red; float: none" ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+					<span ng-show="loginForm.password.$error.required">{{'error_empty' |i18n}}</span>
+					<span ng-show="loginForm.password.$error.pattern">{{'error_limit20' |i18n}}</span>
+				</label> 
+				<br/>
+				
+				
+				<div style="text-align: center">
+						<input type="button"   ng-disabled="loginForm.address.$dirty && loginForm.address.$invalid ||  
+						loginForm.password.$dirty && loginForm.password.$invalid"
+							class="ui primary button" value="{{'login' |i18n}}" ng-click="login(address, password)" />
+				</div>
+				<!-- <input type = "submit" ng-click="submitSc(ip, port, subChainAddress)" value = "Submit" > -->
+			
+				
+				</form>
+            </div>
+            
+            <div class="tab-pane" id="keyStoreLogin" ng-class="{active:false}">
+	            <form name = "keyStoreLoginForm" method="post" class="basic-grey" novalidate style="margin-top:20px;">
+				<h1>
+					{{'keystore_login' |i18n}}
+				</h1>
+			
+				<label> 
+					<span>keyStore :</span> 
+					<input type = "text"  name = "keyStore" ng-model="keyStore" >  
+				</label> 
+				
+				<label> 
+					<span>{{'password' |i18n}} :</span> 
+					<input type = "password"  name = "password" ng-model="password" ng-pattern="/^.{1,20}$/" required>
+					<span style="color:red; float: none" ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+					<span ng-show="loginForm.password.$error.required">{{'error_empty' |i18n}}</span>
+					<span ng-show="loginForm.password.$error.pattern">{{'error_limit20' |i18n}}</span>
+				</label> 
+				<br/>
+					
+				<div style="text-align: center">
+						<input type="button"  
+						class="ui primary button" value="{{'login' |i18n}}" ng-click="keyStoreLogin(keyStore, password)" />
+					</div>
+				<!-- <input type = "submit" ng-click="submitSc(ip, port, subChainAddress)" value = "Submit" > -->
+				 
+				
+				</form>
+            </div>
+            
+            <div class="tab-pane" id="register" ng-class="{active:false}"><!--div class="tab-pane" id="tab_token_2" ng-class="{active: activeTab == 'tab_token_2'}"-->
+            	<form name = "regForm" method="post" class="basic-grey" novalidate style="margin-top:20px;">
+				<h1>
+					{{'register' |i18n}}
+				</h1>
+				<div id = "regDiv">
+				<label> 
+					<span>{{'password' |i18n}} :</span> 
+					<input type = "password"  name = "password1" id = "password1" ng-model="password1" ng-pattern="/^.{1,20}$/" required>
+					<span style="color:red; float: none" ng-show="regForm.password1.$dirty && regForm.password1.$invalid">
+					<span ng-show="regForm.password1.$error.required">{{'error_empty' |i18n}}</span>
+					<span ng-show="regForm.password1.$error.pattern">{{'error_limit20' |i18n}}</span>
+				</label> 
+				<label > 
+					<span>{{'confirm_password' |i18n}} :</span> 
+					<input type = "password"  pw-check="password1"  id = "password2" name = "password2" ng-model="password2" ng-pattern="/^.{1,20}$/" required>
+					<span style="color:red; float: none" ng-show="regForm.password2.$dirty && regForm.password2.$invalid">
+					<!-- <span ng-show="regForm.password2.$error.required">不能为空</span> -->
+					<span ng-show="regForm.password2.$error.pattern">{{'error_limit20' |i18n}}</span>
+					<span ng-show="regForm.password2.$error.pwmatch">{{'error_password_not_match' |i18n}}</span>  
+				</label> 
+				<br/>
+			
+				<!-- <input type = "submit" ng-click="submitSc(ip, port, subChainAddress)" value = "Submit" > -->
+				<div style="text-align:center"> <input type="button" ng-disabled="regForm.password1.$dirty && regForm.password1.$invalid ||  
+					regForm.password2.$dirty && regForm.password2.$invalid"
+						class="ui primary button" value="{{'submit' |i18n}}" ng-click="register(password1)" /></div>
+				
+				
+				</div>
+				</form>
+            </div>
+            
+
+        </div><!-- end tab content -->
+      </div>
+    </div><!-- End: portlet -->
+    
+</div>
+
+</div>
+</body>
